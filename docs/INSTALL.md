@@ -17,17 +17,20 @@ Für die Erstinstallation bleibt somit nur der ...
 ### Bootloader
 Welche Methode für den Bootloader genutzt werden muss hängt vom Gerät hab.
 Grundsätzlich funktioniert `push_firmware` von Freetz-NG (!) mit allen Methode.
-Es gibt einige weitere Tools und Scripte, eigentlich kann man (wenn man es kann) auch ohne diese von Hand mit einer FTP-Verbindung installiere. 
-Der Bootloader hat die IP `192.168.178.1` und ist nicht die IP die man im Webinterface konfiguriert. Man greift via FTP darauf zu.
+Es gibt einige weitere Tools und Scripte, eigentlich kann man (wenn man es kann) auch ohne diese von Hand mit einer FTP-Verbindung installieren.
+Der Bootloader hat die IP `192.168.178.1` und ist nicht die IP die man im Webinterface konfiguriert.
 Wenn man nicht weiss wie man diese verändert, hat man sie sicherlich auch nicht verändert.
+Man greift via FTP darauf zu, die Zugangsdaten lauten `adam2`/`adam2`. Wenn diese nicht akzeptiert werden ist man wahrscheinlich mit dem NAS-FTP vom normalen Fritzos verbunden.
 Ein paar Sekunden nachdem die Fritzbox an den Strom angeschlossen ist ist der Bootloader dieser für wenige Sekunden erreichbar.
 Falls man den Zeitpunkt verpasst hat muss man es solange versuchern bis das Timing passt.
-Zwischengeschaltete Netzwerkgeräte wie Switches können einen positiven oder negativen Effekt haben.
+Zwischengeschaltete Netzwerkgeräte wie Switches können einen positiven oder negativen Effekt haben. Wlan und Powerline sollten nicht verwendet werden.
 Reagiert das Gerät zu zäh und Netzwerkerkennung (media detect/sense) braucht zu lange kann der Zeitpunkt schon vorbei sein.
 Um die Fritzbox im Bootloader anzuhalten kann man eine recovery.exe irgend einer __ANDEREN__ Fritzbox nutzen.
+Alle Fritzboxen ausser den ersten "single-boot" Geräten haben 2 Firmware-Images im Flash und werden abwechselnd genutzt,
+die Aktive kann man via [quote GETENV linux_fs_start](https://github.com/PeterPawn/modfs/blob/master/BOOTSELECTION.ger) im Bootloader ansehen und umschalten.
 
 ### Methoden
-Verfügbare Scripte und Tools
+Verfügbare Scripte und Tools zum Flashen über den Bootloader:
 
  * Gen 1+2: __single-boot__<a id='single'></a> / NOR<br>
    Die ersten Fritzboxen von 7050 bis 7390
@@ -39,11 +42,11 @@ Verfügbare Scripte und Tools
  * Gen 3: __ram-boot__<a id='ram'></a> / NAND / inmemory<br>
    Fritzboxen nach 7390, wie 7490 & 7590
     - `tools/push_firmware` von Freetz-NG
-    - [eva_tools](https://www.yourfritz.de/desc-eva) aus [YourFritz](https://github.com/PeterPawn/YourFritz/tree/main/eva_tools) für Windows/PowerShell<br>
+    - [eva_tools](http://www.yourfritz.de/desc-eva) aus [YourFritz](https://github.com/PeterPawn/YourFritz/tree/main/eva_tools) für Windows/PowerShell<br>
       Vorsicht: Dieses Script kann kein Image flashen, sondern nur das soganannte <br>`inmemory`-Zwischenformat. Siehe dazu `tools/image2inmemory`
 
  * Gen 6: __fit-boot__<a id='fit'></a><br>
-   Neueste Fritzboxen wie 5530 & 7530 AX
+   Neueste Fritzboxen wie 7530 AX & 5530
     - `tools/push_firmware` von Freetz-NG
     - [fit_tools](https://github.com/PeterPawn/YourFritz/tree/main/fit_tools) von YourFritz,
       wird in Freetz-NG für den AVM spezifische Header bzw<br>Signatur genutzt. Danach können DTC und U-Boot verwenden werden.
@@ -67,7 +70,7 @@ Um es kurz zusammenzufassen: Einfach `tools/push_firmware` verwenden und den Res
  * Wenn man nicht weiss weshalb man einen Parameter angegeben halt sollte man diesen weglassen! Es müsste alles automatisch erkannt werden.
 
 ### Anmerkungen
- * Die ganzen Namen hier wie zB NOR, NAND oder INHAUS sind meist keine offiziellen sondern Vereinbarungen oder Anlehnungen.
+ * Die Namen hier wie zB NOR, NAND oder INHAUS sind meist keine offiziellen Bezeichnungen sondern Vereinbarungen oder Anlehnungen.
  * Es gibt dazu noch sehr viel zu lesen, mindestens in diversen Foren (IPPF, IPF) und auf GitHub (Freetz-NG, YourFritz).
  * Mit Fritzbox sind auch die anderen Dinger von AVM gemein die nicht Fritzbox heissen.
 

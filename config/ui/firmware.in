@@ -733,7 +733,7 @@ choice
 			For more details see <http://www.avm.de/Labor/>.
 
 	config FREETZ_TYPE_FIRMWARE_07_5X
-		bool "FRITZ!OS 07.50+ - UNTESTED"
+		bool "FRITZ!OS 07.50+"
 		select FREETZ_AVM_VERSION_07_5X
 		depends on FREETZ_AVM_HAS_FIRMWARE_07_5X
 
@@ -765,7 +765,6 @@ config FREETZ_TYPE_FIRMWARE_DETECT_LATEST
 	bool "Detect the latest firmware version"
 	depends on FREETZ_SHOW_EXPERT
 	depends on FREETZ_AVM_HAS_JUIS_SUPPORT
-	depends on !FREETZ_TYPE_ALIEN_HARDWARE
 	depends on !FREETZ_TYPE_FIRMWARE_FINAL || FREETZ_AVM_VERSION_LATEST_MAJOR
 	select FREETZ_DL_DETECT_IMAGE_NAME
 	default n

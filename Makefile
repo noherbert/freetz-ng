@@ -43,7 +43,7 @@ ifneq ($(shell grep -q "$$($(ENVIRA_REV_TOOL))" $(ENVIRA_LAST_REV) 2>/dev/null &
 endif
 endif
 	@$(ENVIRA_REV_TOOL) make
-	@umask $(ENVIRA_UMASK) && PATH="$(ENVIRA_PATH_ABS):$(PATH)" $(MAKE) $(MAKECMDGOALS) $(ENVIRA_MAKE_VARS) || kill $$$$
+	@umask $(ENVIRA_UMASK) && PATH="$(ENVIRA_PATH_ABS):$(PATH):/usr/sbin" $(MAKE) $(MAKECMDGOALS) $(ENVIRA_MAKE_VARS) || kill $$$$
 .PHONY: envira
 
 $(MAKECMDGOALS): envira
@@ -176,7 +176,7 @@ endif
 # kconfig checks them in its .mk-file to be able to disable items always
 ifneq ($(findstring menuconfig,$(MAKECMDGOALS)),menuconfig)
 ifneq ($(NO_PREREQ_CHECK),y)
-ifneq (OK,$(shell $(CHECK_PREREQ_TOOL) >&2 && echo OK))
+ifneq (OK,$(shell $(CHECK_PREREQ_TOOL check) >&2 && echo OK))
 $(error Some build prerequisites are missing! See '.prerequisites' for why. Please install the missing packages before trying again. See https://freetz-ng.github.io/freetz-ng/PREREQUISITES for installation hints)
 endif
 endif
